@@ -56,7 +56,7 @@ module Mailboxer
         convo = Conversation.new({:subject => subject})
         convo.created_at = message_timestamp
         convo.updated_at = message_timestamp
-        message = messages.new({:body => msg_body, :subject => subject, :attachment => attachment})
+        message = Message.new({:body => msg_body, :subject => subject, :attachment => attachment})
         message.created_at = message_timestamp
         message.updated_at = message_timestamp
         message.conversation = convo
@@ -69,7 +69,7 @@ module Mailboxer
       #Use reply_to_sender, reply_to_all and reply_to_conversation instead.
       def reply(conversation, recipients, reply_body, subject=nil, sanitize_text=true, attachment=nil)
         subject = subject || "RE: #{conversation.subject}"
-        response = messages.new({:body => reply_body, :subject => subject, :attachment => attachment})
+        response = Message.new({:body => reply_body, :subject => subject, :attachment => attachment})
         response.conversation = conversation
         response.recipients = recipients.is_a?(Array) ? recipients : [recipients]
         response.recipients = response.recipients.uniq
